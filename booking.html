@@ -155,9 +155,26 @@
   </script>
 <link rel="icon" href="assets/kvm-icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/placeholders.css" />
+  <link rel="stylesheet" href="css/background.css" />
+  <script src="js/motion.js" defer></script>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="preconnect" href="https://d3e54v103j8qbb.cloudfront.net" crossorigin />
 </head>
 
 <body>
+  <!-- Recolor only the animated background; keep its original motion. -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none">
+    <defs>
+      <filter id="plum-background" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+        <feColorMatrix type="saturate" values="0" />
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="0.058824 0.180392 0.501961" />
+          <feFuncG type="table" tableValues="0.035294 0.109804 0.360784" />
+          <feFuncB type="table" tableValues="0.054902 0.168627 0.474510" />
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
   <div data-us-project="tnAhw4e67txvvqrBP7oz" class="background"></div>
   <div data-wf--nav--variant="base" class="navigation"><a href="index.html" class="nav--logo w-inline-block">
       <div class="logo nav__link w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 27"
@@ -232,94 +249,7 @@
             }
           </style>
 
-          <script>/*
-document.addEventListener("DOMContentLoaded", () => {
-// 👇 Déclare tous les couples trigger / dropdown que tu veux animer
-const dropdownConfigs = [
-{
-triggerSelector: ".nav-link--offre",
-dropdownSelector: ".nav-dropdown--offre",
-},
-{
-triggerSelector: ".nav-link--expertise",
-dropdownSelector: ".nav-dropdown--expertise",
-}
-];
-
-dropdownConfigs.forEach(({ triggerSelector, dropdownSelector }) => {
-const trigger  = document.querySelector(triggerSelector);
-const dropdown = document.querySelector(dropdownSelector);
-
-if (!trigger || !dropdown) return;
-
-const items = dropdown.querySelectorAll(".split-nav");
-if (!items.length) return;
-
-// SplitText sur chaque item
-const splitInstances = [];
-items.forEach((el) => {
-const split = new SplitText(el, {
-  type: "lines",
-  mask: "lines",
-});
-splitInstances.push(split);
-
-gsap.set(split.lines, {
-  yPercent: 120,
-  opacity: 0,
-});
-});
-
-// Timeline d'apparition du dropdown
-const showTl = gsap.timeline({ paused: true })
-.set(dropdown, {
-  autoAlpha: 1,
-  pointerEvents: "auto",
-})
-.fromTo(
-  dropdown,
-  { y: 8 },
-  { y: 0, duration: 0.3, ease: "quart.out" },
-  0
-)
-.to(
-  splitInstances.map((s) => s.lines),
-  {
-    yPercent: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "quart.out",
-    stagger: 0.05,
-  },
-  0
-);
-
-let hideTimeout;
-
-function openDropdown() {
-clearTimeout(hideTimeout);
-showTl.play();
-}
-
-function closeDropdown() {
-hideTimeout = setTimeout(() => {
-  showTl.reverse();
-}, 80); // petit délai pour laisser le temps de passer du lien au menu
-}
-
-// Hover sur le lien principal
-trigger.addEventListener("mouseenter", openDropdown);
-trigger.addEventListener("mouseleave", closeDropdown);
-
-// Hover sur le dropdown lui-même
-dropdown.addEventListener("mouseenter", () => {
-clearTimeout(hideTimeout);
-});
-
-dropdown.addEventListener("mouseleave", closeDropdown);
-});
-});*/
-          </script>
+          
 
           <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -700,63 +630,13 @@ dropdown.addEventListener("mouseleave", closeDropdown);
               }
 
               // ========== COULEURS NAV ==========
-              function updateNavColors() {
-                // Si le menu mobile est ouvert → on ne touche pas aux couleurs
-                if (nav.classList.contains("menu-open")) return;
-
-                const footerRect = footer ? footer.getBoundingClientRect() : null;
-                const footerVisible = footerRect
-                  ? footerRect.top <= window.innerHeight && footerRect.bottom >= 0
-                  : false;
-
-                let onWhite = false;
-                whiteSections.forEach(section => {
-                  const rect = section.getBoundingClientRect();
-                  if (rect.top <= navHeight && rect.bottom >= 0) {
-                    onWhite = true;
-                  }
-                });
-
-                // ✅ Override : sur la page Contactez-nous, on ignore le mode "onWhite" (donc jamais noir)
-                if (isContactPage) onWhite = false;
-
-                nav.classList.toggle("is-on-white", onWhite && !footerVisible);
-
-                if (footerVisible) {
-                  gsap.to(navLinks, { color: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(logoSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(arrowSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-
-                  gsap.to(btnBlocks, {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    duration: 0.25,
-                    ease: "power2.out"
-                  });
-                } else if (onWhite) {
-                  gsap.to(navLinks, { color: "#000", duration: 0.25, ease: "power2.out" });
-                  gsap.to(logoSvgs, { fill: "#000", duration: 0.25, ease: "power2.out" });
-                  gsap.to(arrowSvgs, { fill: "#000", duration: 0.25, ease: "power2.out" });
-
-                  gsap.to(btnBlocks, {
-                    backgroundColor: "rgba(204, 229, 255, 0.35)",
-                    duration: 0.25,
-                    ease: "power2.out"
-                  });
-                } else {
-                  gsap.to(navLinks, { color: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(logoSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(arrowSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-
-                  gsap.to(btnBlocks, {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    duration: 0.25,
-                    ease: "power2.out"
-                  });
-                }
-              }
+              const updateNavColors = SiteMotion.createNavColors({
+                nav, navLinks, whiteSections, footer, btnBlocks, logoSvgs, arrowSvgs,
+                ignoreWhite: isContactPage
+              });
 
               // ========== SCROLL (hide/show) ==========
-              window.addEventListener("scroll", () => {
+              window.addEventListener("scroll", SiteMotion.frameTask(() => {
                 if (nav.classList.contains("menu-open")) return;
 
                 const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
@@ -792,7 +672,7 @@ dropdown.addEventListener("mouseleave", closeDropdown);
                 }
 
                 updateNavColors();
-              });
+              }), { passive: true });
 
               // ========== REVEAL À LA SOURIS (DESKTOP) ==========
               window.addEventListener("mousemove", (e) => {
@@ -1600,156 +1480,11 @@ dropdown.addEventListener("mouseleave", closeDropdown);
   <script type="text/javascript">gsap.registerPlugin(SplitText, ScrollTrigger, InertiaPlugin, Draggable);</script>
   <script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script>
 
-  <script
-    type="text/javascript">!function () { if (!window.UnicornStudio) { window.UnicornStudio = { isInitialized: !1 }; var i = document.createElement("script"); i.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.5.3/dist/unicornStudio.umd.js", i.onload = function () { window.UnicornStudio.isInitialized || (UnicornStudio.init(), window.UnicornStudio.isInitialized = !0) }, (document.head || document.body).appendChild(i) } }();</script>
+  
 
-  <script>
-    // Initialize a new Lenis instance for smooth scrolling
-    const lenis = new Lenis();
-
-    // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-    // This ensures Lenis's smooth scroll animation updates on each GSAP tick
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-    });
-
-    // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-    gsap.ticker.lagSmoothing(0);
-
-
-
-  </script>
-  <script>
-    (() => {
-      const cards = Array.from(
-        document.querySelectorAll(".about__expertise-container")
-      );
-      if (cards.length < 2) return;
-
-      const START_OFFSET_VW = 4.2; // 👈 ajuste ici (ex: 1.5 – 3)
-      let startOffsetPx = window.innerWidth * (START_OFFSET_VW / 100);
-
-      let ticking = false;
-
-      const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
-
-      const update = () => {
-        cards.forEach((card, i) => {
-          if (i === 0) return;
-
-          const prevCard = cards[i - 1];
-          const prevContent = prevCard.querySelector(
-            ".about__expertise-mask"
-          );
-          if (!prevContent) return;
-
-          const cardRect = card.getBoundingClientRect();
-          const prevRect = prevCard.getBoundingClientRect();
-
-          // point de contact (bottom carte précédente)
-          const contactY = prevRect.bottom;
-
-          // distance parcourue depuis le contact + offset perceptif
-          let distance =
-            contactY - cardRect.top - startOffsetPx;
-
-          distance = clamp(distance, 0, prevRect.height);
-
-          prevContent.style.clipPath =
-            `inset(0px 0px ${distance}px 0px)`;
-        });
-
-        ticking = false;
-      };
-
-      const onScroll = () => {
-        if (!ticking) {
-          requestAnimationFrame(update);
-          ticking = true;
-        }
-      };
-
-      const onResize = () => {
-        startOffsetPx = window.innerWidth * (START_OFFSET_VW / 100);
-        update();
-      };
-
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", onResize);
-
-      // init
-      update();
-    })();
-  </script>
-  <script>
-    (() => {
-      const cards = Array.from(
-        document.querySelectorAll(".about__expertise-container")
-      );
-      if (!cards.length) return;
-
-      let ticking = false;
-
-      const initSVG = (svg) => {
-        const paths = svg.querySelectorAll(
-          "path, line, polyline, polygon, circle, rect"
-        );
-        paths.forEach(path => {
-          const length = path.getTotalLength();
-          path.style.strokeDasharray = length;
-          path.style.strokeDashoffset = length;
-          path.style.willChange = "stroke-dashoffset";
-        });
-      };
-
-      // Init de tous les SVG
-      cards.forEach(card => {
-        const svg = card.querySelector(".about-expertise__svg svg");
-        if (svg) initSVG(svg);
-      });
-
-      const update = () => {
-        const viewportHeight = window.innerHeight;
-        const start = viewportHeight;        // bottom viewport
-        const end = viewportHeight * 0.5;    // 50% viewport
-
-        cards.forEach(card => {
-          const svg = card.querySelector(".about-expertise__svg svg");
-          if (!svg) return;
-
-          const rect = card.getBoundingClientRect();
-          const paths = svg.querySelectorAll(
-            "path, line, polyline, polygon, circle, rect"
-          );
-
-          let progress = (start - rect.top) / (start - end);
-          progress = Math.min(Math.max(progress, 0), 1);
-
-          paths.forEach(path => {
-            const length = path.getTotalLength();
-            path.style.strokeDashoffset = length * (1 - progress);
-          });
-        });
-
-        ticking = false;
-      };
-
-      const onScroll = () => {
-        if (!ticking) {
-          requestAnimationFrame(update);
-          ticking = true;
-        }
-      };
-
-      window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", update);
-
-      update();
-    })();
-  </script>
+  <script src="js/runtime.js"></script>
+  
+  
 </body>
 
 </html>
