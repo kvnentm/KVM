@@ -51,6 +51,21 @@
       -webkit-text-fill-color: transparent;
     }
 
+    .manifesto-static {
+      letter-spacing: .083vw;
+      font-feature-settings: "dlig" on, "ss03" on;
+      font-family: AlmarenaNeueDisplay, Arial, sans-serif;
+      font-size: 4.167vw;
+      font-weight: 300;
+      line-height: .95;
+    }
+
+    @media screen and (max-width: 479px) {
+      .manifesto-static {
+        font-size: 7.463vw;
+      }
+    }
+
     .w-webflow-badge {
       display: none !important;
     }
@@ -71,9 +86,26 @@
   </style>
 <link rel="icon" href="assets/kvm-icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/placeholders.css" />
+  <link rel="stylesheet" href="css/background.css" />
+  <script src="js/motion.js" defer></script>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin />
+  <link rel="preconnect" href="https://d3e54v103j8qbb.cloudfront.net" crossorigin />
 </head>
 
 <body>
+  <!-- Recolor only the animated background; keep its original motion. -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none">
+    <defs>
+      <filter id="plum-background" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+        <feColorMatrix type="saturate" values="0" />
+        <feComponentTransfer>
+          <feFuncR type="table" tableValues="0.058824 0.180392 0.501961" />
+          <feFuncG type="table" tableValues="0.035294 0.109804 0.360784" />
+          <feFuncB type="table" tableValues="0.054902 0.168627 0.474510" />
+        </feComponentTransfer>
+      </filter>
+    </defs>
+  </svg>
   <div data-wf--nav--variant="base" class="navigation"><a href="index.html" aria-current="page"
       class="nav--logo w-inline-block w--current">
       <div class="logo nav__link w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 27"
@@ -144,94 +176,7 @@
             }
           </style>
 
-          <script>/*
-document.addEventListener("DOMContentLoaded", () => {
-// 👇 Déclare tous les couples trigger / dropdown que tu veux animer
-const dropdownConfigs = [
-{
-triggerSelector: ".nav-link--offre",
-dropdownSelector: ".nav-dropdown--offre",
-},
-{
-triggerSelector: ".nav-link--expertise",
-dropdownSelector: ".nav-dropdown--expertise",
-}
-];
-
-dropdownConfigs.forEach(({ triggerSelector, dropdownSelector }) => {
-const trigger  = document.querySelector(triggerSelector);
-const dropdown = document.querySelector(dropdownSelector);
-
-if (!trigger || !dropdown) return;
-
-const items = dropdown.querySelectorAll(".split-nav");
-if (!items.length) return;
-
-// SplitText sur chaque item
-const splitInstances = [];
-items.forEach((el) => {
-const split = new SplitText(el, {
-  type: "lines",
-  mask: "lines",
-});
-splitInstances.push(split);
-
-gsap.set(split.lines, {
-  yPercent: 120,
-  opacity: 0,
-});
-});
-
-// Timeline d'apparition du dropdown
-const showTl = gsap.timeline({ paused: true })
-.set(dropdown, {
-  autoAlpha: 1,
-  pointerEvents: "auto",
-})
-.fromTo(
-  dropdown,
-  { y: 8 },
-  { y: 0, duration: 0.3, ease: "quart.out" },
-  0
-)
-.to(
-  splitInstances.map((s) => s.lines),
-  {
-    yPercent: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "quart.out",
-    stagger: 0.05,
-  },
-  0
-);
-
-let hideTimeout;
-
-function openDropdown() {
-clearTimeout(hideTimeout);
-showTl.play();
-}
-
-function closeDropdown() {
-hideTimeout = setTimeout(() => {
-  showTl.reverse();
-}, 80); // petit délai pour laisser le temps de passer du lien au menu
-}
-
-// Hover sur le lien principal
-trigger.addEventListener("mouseenter", openDropdown);
-trigger.addEventListener("mouseleave", closeDropdown);
-
-// Hover sur le dropdown lui-même
-dropdown.addEventListener("mouseenter", () => {
-clearTimeout(hideTimeout);
-});
-
-dropdown.addEventListener("mouseleave", closeDropdown);
-});
-});*/
-          </script>
+          
 
           <script>
             document.addEventListener("DOMContentLoaded", () => {
@@ -580,60 +525,13 @@ dropdown.addEventListener("mouseleave", closeDropdown);
               const navHeight = nav.offsetHeight;
 
               // ========== COULEURS NAV ==========
-              function updateNavColors() {
-                // Si le menu mobile est ouvert → on ne touche pas aux couleurs
-                if (nav.classList.contains("menu-open")) return;
-
-                const footerRect = footer ? footer.getBoundingClientRect() : null;
-                const footerVisible = footerRect
-                  ? footerRect.top <= window.innerHeight && footerRect.bottom >= 0
-                  : false;
-
-                let onWhite = false;
-                whiteSections.forEach(section => {
-                  const rect = section.getBoundingClientRect();
-                  if (rect.top <= navHeight && rect.bottom >= 0) {
-                    onWhite = true;
-                  }
-                });
-
-                nav.classList.toggle("is-on-white", onWhite && !footerVisible);
-
-                if (footerVisible) {
-                  gsap.to(navLinks, { color: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(logoSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(arrowSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-
-                  gsap.to(btnBlocks, {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    duration: 0.25,
-                    ease: "power2.out"
-                  });
-                } else if (onWhite) {
-                  gsap.to(navLinks, { color: "#000", duration: 0.25, ease: "power2.out" });
-                  gsap.to(logoSvgs, { fill: "#000", duration: 0.25, ease: "power2.out" });
-                  gsap.to(arrowSvgs, { fill: "#000", duration: 0.25, ease: "power2.out" });
-
-                  gsap.to(btnBlocks, {
-                    backgroundColor: "rgba(204, 229, 255, 0.35)",
-                    duration: 0.25,
-                    ease: "power2.out"
-                  });
-                } else {
-                  gsap.to(navLinks, { color: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(logoSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-                  gsap.to(arrowSvgs, { fill: "#fff", duration: 0.25, ease: "power2.out" });
-
-                  gsap.to(btnBlocks, {
-                    backgroundColor: "rgba(255, 255, 255, 0.1)",
-                    duration: 0.25,
-                    ease: "power2.out"
-                  });
-                }
-              }
+              const updateNavColors = SiteMotion.createNavColors({
+                nav, navLinks, whiteSections, footer, btnBlocks, logoSvgs, arrowSvgs,
+                ignoreWhite: false
+              });
 
               // Keep the compact logo and navigation visible in both scroll directions.
-              window.addEventListener("scroll", updateNavColors, { passive: true });
+              // Navigation colors update only when section visibility changes.
 
               setTimeout(updateNavColors, 50);
 
@@ -1183,7 +1081,7 @@ dropdown.addEventListener("mouseleave", closeDropdown);
             </div>
           </div>
           <div id="w-node-f795206b-cfea-47c2-42e7-3d1c4abaf737-8b326cb4">
-            <p class="manifesto">We are KVM. Founded in Dublin in 2026, we fly where traditional cameras cannot. Built by a team of skilled FPV pilots, KVM fuses technical precision with creative storytelling — delivering breathtaking aerial footage for real estate, film, weddings, and tourism across Ireland and beyond.</p>
+            <p class="manifesto-static">We are KVM. Founded in Dublin in 2026, we fly where traditional cameras cannot. Built by a team of skilled FPV pilots, KVM fuses technical precision with creative storytelling — delivering breathtaking aerial footage for real estate, film, weddings, and tourism across Ireland and beyond.</p>
           </div>
         </div>
         <div class="spacer"></div>
@@ -1193,7 +1091,7 @@ dropdown.addEventListener("mouseleave", closeDropdown);
           <div class="subtitle-in-text">
             <div class="nav-tag split-tag">Services</div>
           </div>
-          <p class="manifesto"><span class="text-span-2"> </span>From sweeping coastal properties to intimate wedding venues and cinematic film sets, we align creative vision, technical precision, and flight expertise to make every project unforgettable.</p>
+          <p class="manifesto-static"><span class="text-span-2"> </span>From sweeping coastal properties to intimate wedding venues and cinematic film sets, we align creative vision, technical precision, and flight expertise to make every project unforgettable.</p>
         </div>
       </div>
     </div>
@@ -1202,7 +1100,7 @@ dropdown.addEventListener("mouseleave", closeDropdown);
         <div class="track">
           <div class="h-slide">
             <div class="top">
-              <p class="claim-s split-timeline">Seamless aerial fly-throughs<br />for residential homes, commercial<br />offices, workspaces, and open land.<br />Exterior landscapes to interior<br />reveals — all captured in<br />stunning 4K.</p>
+              <p class="claim-s split-slide">Seamless aerial fly-throughs<br />for residential homes, commercial<br />offices, workspaces, and open land.<br />Exterior landscapes to interior<br />reveals — all captured in<br />stunning 4K.</p>
               <div class="div-hide">
                 <div class="h-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
                     <path
@@ -1212,13 +1110,13 @@ dropdown.addEventListener("mouseleave", closeDropdown);
               </div>
             </div>
             <div class="bot col clipping-text gap">
-              <div class="nav-tag clipping-text split-timeline">Real Estate</div>
-              <h2 class="clipping-text split-timeline home-h2">Fly-Through</h2>
+              <div class="nav-tag clipping-text">Real Estate</div>
+              <h2 class="clipping-text home-h2">Fly-Through</h2>
             </div>
           </div>
           <div class="h-slide side">
             <div class="slide-side__content">
-              <div class="nav-tag color-white split-horizontal">Service</div>
+              <div class="nav-tag color-white">Service</div>
               <div class="w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58" fill="none"
                   class="svg-draw">
                   <path d="M1.19006 0.969727C1.19006 31.7697 26.1601 56.7397 56.9601 56.7397" stroke="white"
@@ -1244,12 +1142,12 @@ dropdown.addEventListener("mouseleave", closeDropdown);
                   }
                 </style>
               </div>
-              <div class="nav-tag color-white split-horizontal">Service</div>
+              <div class="nav-tag color-white">Service</div>
             </div>
           </div>
           <div class="h-slide">
             <div class="top">
-              <p class="claim-s split-horizontal">Smooth, stabilised aerial<br />cinematography for films,<br />tourism reels, and commercial<br />productions — delivered<br />in colorist-friendly ProRes raw,<br />ready for any timeline.</p>
+              <p class="claim-s split-slide">Smooth, stabilised aerial<br />cinematography for films,<br />tourism reels, and commercial<br />productions — delivered<br />in colorist-friendly ProRes raw,<br />ready for any timeline.</p>
               <div class="div-hide">
                 <div class="h-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
                     <path
@@ -1259,13 +1157,13 @@ dropdown.addEventListener("mouseleave", closeDropdown);
               </div>
             </div>
             <div class="bot col clipping-text gap">
-              <div class="nav-tag clipping-text split-horizontal">Cinematic Production</div>
-              <h2 class="clipping-text split-reveal split-horizontal">Cine<br />— Matic</h2>
+              <div class="nav-tag clipping-text">Cinematic Production</div>
+              <h2 class="clipping-text home-h2">Cine<br />— Matic</h2>
             </div>
           </div>
           <div class="h-slide side">
             <div class="slide-side__content">
-              <div class="nav-tag color-white split-horizontal">Service</div>
+              <div class="nav-tag color-white">Service</div>
               <div class="w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58 58" fill="none"
                   class="svg-draw">
                   <path
@@ -1278,12 +1176,12 @@ dropdown.addEventListener("mouseleave", closeDropdown);
                     d="M42.72 56.44C50.3139 56.44 56.47 44.0293 56.47 28.72C56.47 13.4107 50.3139 1 42.72 1C35.1261 1 28.97 13.4107 28.97 28.72C28.97 44.0293 35.1261 56.44 42.72 56.44Z"
                     stroke="white" stroke-width="0.5" stroke-miterlimit="10" />
                 </svg></div>
-              <div class="nav-tag color-white split-horizontal">Service</div>
+              <div class="nav-tag color-white">Service</div>
             </div>
           </div>
           <div class="h-slide">
             <div class="top">
-              <p class="claim-s split-horizontal">Breathtaking aerial coverage<br />for your most important moments.<br />Dynamic, cinematic shots from<br />above — turning memories<br />into footage you'll keep<br />forever.</p>
+              <p class="claim-s split-slide">Breathtaking aerial coverage<br />for your most important moments.<br />Dynamic, cinematic shots from<br />above — turning memories<br />into footage you'll keep<br />forever.</p>
               <div class="div-hide">
                 <div class="h-arrow w-embed"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none">
                     <path
@@ -1293,13 +1191,13 @@ dropdown.addEventListener("mouseleave", closeDropdown);
               </div>
             </div>
             <div class="bot col clipping-text gap">
-              <div class="nav-tag clipping-text split-horizontal">Weddings &amp; Events</div>
-              <h2 class="clipping-text split-horizontal split-reveal">Capture</h2>
+              <div class="nav-tag clipping-text">Weddings &amp; Events</div>
+              <h2 class="clipping-text home-h2">Capture</h2>
             </div>
           </div>
           <div class="h-slide side">
             <div class="slide-side__content">
-              <div class="nav-tag color-white split-horizontal">Service</div>
+              <div class="nav-tag color-white">Service</div>
               <div class="w-embed"><svg xmlns="http://www.w3.org/2000/svg" class="svg-draw" viewBox="0 0 59 59"
                   fill="none">
                   <path d="M28.92 28.92L28.65 56.83H1V1H56.84L57.06 28.9L28.92 28.92Z" stroke="white" stroke-width="1.5"
@@ -1307,7 +1205,7 @@ dropdown.addEventListener("mouseleave", closeDropdown);
                   <path d="M56.5042 29.7143L28.9945 2.20459L1.48476 29.7143L28.9945 57.2241L56.5042 29.7143Z"
                     stroke="white" stroke-width="1.5" stroke-miterlimit="10" />
                 </svg></div>
-              <div class="nav-tag color-white split-horizontal">Service</div>
+              <div class="nav-tag color-white">Service</div>
             </div>
           </div>
         </div>
@@ -1323,39 +1221,59 @@ dropdown.addEventListener("mouseleave", closeDropdown);
             if (!section || !wrapper || !track) return;
 
             const isMobile = window.matchMedia("(max-width: 479px)").matches;
+            const slides = gsap.utils.toArray(".h-slide");
+            const slideDataList = [];
 
-            // ===== SPLIT TEXT =====
-            const splitElems = document.querySelectorAll(".split-timeline");
-            let allLines = [];
-            let splitPlayed = false;
+            // 1) Prepare all slides: split text, prepare SVG paths & arrows
+            slides.forEach((slide, index) => {
+              const targets = slide.querySelectorAll(".split-slide:not(.home-h2):not(.nav-tag)");
+              const svgPaths = slide.querySelectorAll(".svg-draw path");
+              const arrows = slide.querySelectorAll(".h-arrow");
 
-            if (splitElems.length && typeof SplitText !== "undefined") {
-              const splits = [];
+              let lines = [];
+              if (targets.length && typeof SplitText !== "undefined") {
+                const splits = [];
+                targets.forEach((el) => {
+                  const split = new SplitText(el, { type: "lines", mask: "lines" });
+                  splits.push(split);
+                });
+                lines = splits.flatMap((s) => s.lines);
+                gsap.set(lines, { y: "140%", opacity: 0 });
+              }
 
-              splitElems.forEach(el => {
-                const split = new SplitText(el, { type: "lines", mask: "lines" });
-                splits.push(split);
+              if (svgPaths.length) {
+                svgPaths.forEach((path) => {
+                  const length = path.getTotalLength();
+                  gsap.set(path, {
+                    stroke: "#ffffff",
+                    strokeWidth: 1,
+                    fill: "none",
+                    strokeDasharray: length,
+                    strokeDashoffset: length
+                  });
+                });
+              }
+
+              if (arrows.length) {
+                gsap.set(arrows, { yPercent: 150 });
+              }
+
+              slideDataList.push({
+                slide,
+                lines,
+                svgPaths,
+                arrows,
+                isFirst: index === 0,
+                played: false
               });
+            });
 
-              allLines = splits.flatMap(s => s.lines);
+            function playSlideAnim(data) {
+              if (!data || data.played) return;
+              data.played = true;
 
-              gsap.set(allLines, { y: "140%", opacity: 0 });
-            }
-
-            // ===== FIRST ARROW =====
-            const firstSlide = section.querySelector(".h-slide");
-            const firstArrows = firstSlide?.querySelectorAll(".h-arrow");
-
-            if (firstArrows?.length) {
-              gsap.set(firstArrows, { yPercent: 150 });
-            }
-
-            function playIntroAnim() {
-              if (splitPlayed) return;
-              splitPlayed = true;
-
-              if (allLines.length) {
-                gsap.to(allLines, {
+              if (data.lines && data.lines.length) {
+                gsap.to(data.lines, {
                   y: "0%",
                   opacity: 1,
                   duration: 0.7,
@@ -1364,8 +1282,16 @@ dropdown.addEventListener("mouseleave", closeDropdown);
                 });
               }
 
-              if (firstArrows?.length) {
-                gsap.to(firstArrows, {
+              if (data.svgPaths && data.svgPaths.length) {
+                gsap.to(data.svgPaths, {
+                  strokeDashoffset: 0,
+                  duration: 1.5,
+                  ease: "power3.inOut"
+                });
+              }
+
+              if (data.arrows && data.arrows.length) {
+                gsap.to(data.arrows, {
                   yPercent: 0,
                   duration: 0.7,
                   ease: "power3.out"
@@ -1382,7 +1308,9 @@ dropdown.addEventListener("mouseleave", closeDropdown);
                 trigger: section,
                 start: "top 80%",
                 once: true,
-                onEnter: playIntroAnim
+                onEnter: () => {
+                  slideDataList.forEach((data) => playSlideAnim(data));
+                }
               });
 
               return;
@@ -1416,7 +1344,8 @@ dropdown.addEventListener("mouseleave", closeDropdown);
               duration: 0.3
             });
 
-            tl.call(playIntroAnim, null, ">");
+            // Slide 1 (Fly-Through) triggers when scale reaches 1
+            tl.call(() => playSlideAnim(slideDataList[0]), null, ">");
 
             tl.addLabel("scaleEnd");
 
@@ -1431,6 +1360,27 @@ dropdown.addEventListener("mouseleave", closeDropdown);
             });
 
             tl.to({}, { duration: 0.15 });
+
+            // Observer for subsequent slides (Card 2, Card 3, dividers)
+            const observer = new IntersectionObserver(
+              (entries) => {
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
+                  const data = slideDataList.find((d) => d.slide === entry.target);
+                  if (data && !data.isFirst) {
+                    playSlideAnim(data);
+                    observer.unobserve(entry.target);
+                  }
+                });
+              },
+              {
+                threshold: [0.5]
+              }
+            );
+
+            slideDataList.forEach((data) => {
+              if (!data.isFirst) observer.observe(data.slide);
+            });
 
             // ===================== PIN TEXTE (70% DU SCALE) =====================
             if (textPin) {
@@ -1453,305 +1403,13 @@ dropdown.addEventListener("mouseleave", closeDropdown);
             }
           });
         </script>
-
-
-
-
-
-
-
-        <script>/*
-window.addEventListener("load", () => {
-const section  = document.querySelector(".horizontal-section");
-const wrapper  = section?.querySelector(".horizontal-wrapper");
-const track    = section?.querySelector(".track");
-if (!section || !wrapper || !track) return;
-
-const isMobile = window.matchMedia("(max-width: 479px)").matches;
-
-// ===== SPLIT TEXT SUR .split-timeline =====
-const splitElems = document.querySelectorAll(".split-timeline");
-let allLines = [];
-let splitPlayed = false; // pour éviter de rejouer 50 fois
-
-if (splitElems.length && typeof SplitText !== "undefined") {
-const splits = [];
-
-splitElems.forEach(el => {
-const split = new SplitText(el, {
-  type: "lines",
-  mask: "lines"
-});
-splits.push(split);
-});
-
-allLines = splits.flatMap(s => s.lines);
-
-// état initial : caché en bas
-gsap.set(allLines, {
-y: "140%",
-opacity: 0
-});
-}
-
-// ===== PREMIÈRE H-SLIDE → H-ARROW =====
-const firstSlide  = section.querySelector(".h-slide");
-const firstArrows = firstSlide ? firstSlide.querySelectorAll(".h-arrow") : null;
-
-if (firstArrows && firstArrows.length) {
-gsap.set(firstArrows, {
-yPercent: 150
-// opacity: 0 si tu veux aussi un fade
-});
-}
-
-// Fonction qui joue l'anim texte + flèche (utilisée sur desktop ET mobile)
-function playIntroAnim() {
-if (splitPlayed) return;
-splitPlayed = true;
-
-// Texte split
-if (allLines && allLines.length) {
-gsap.to(allLines, {
-  y: "0%",
-  opacity: 1,
-  duration: 0.7,
-  ease: "power3.out",
-  stagger: 0.05
-});
-}
-
-// Première flèche .h-arrow de la première slide
-if (firstArrows && firstArrows.length) {
-gsap.to(firstArrows, {
-  yPercent: 0,
-  // opacity: 1,
-  duration: 0.7,
-  ease: "power3.out"
-});
-}
-}
-
-// ===================== BRANCHE MOBILE =====================
-if (isMobile) {
-// Pas de scale ni de scroll horizontal sur mobile
-gsap.set(wrapper, {
-scale: 1,
-x: 0,
-y: 0,
-transformOrigin: "100% 100%"
-});
-
-gsap.set(track, { x: 0 });
-
-// On déclenche juste l'anim texte/flèche à l'apparition
-ScrollTrigger.create({
-trigger: section,
-start: "top 80%",
-once: true,
-onEnter: playIntroAnim
-});
-
-return; // on ne crée PAS la timeline horizontale
-}
-
-// ===================== BRANCHE DESKTOP =====================
-
-// Slides .h-slide = 50vw → le track est plus large que le viewport
-const getTotalDistance = () => track.scrollWidth - window.innerWidth;
-
-// ÉTAT DE DÉPART
-gsap.set(wrapper, {
-scale: 0,
-x: 0,
-y: 0,
-transformOrigin: "100% 100%" // coin bas-droite
-});
-
-gsap.set(track, { x: 0 });
-
-const tl = gsap.timeline({
-scrollTrigger: {
-trigger: section,
-start: "top top",
-// un peu de marge après la fin du scroll horizontal pour éviter le "drop"
-end: () => "+=" + (getTotalDistance() + window.innerHeight * 0.5),
-scrub: true,
-pin: true,
-anticipatePin: 1,
-invalidateOnRefresh: true,
-// markers: true,
-},
-defaults: { ease: "none" }
-});
-
-// PHASE 1 → scale 0 → 1 + x: 50vw
-tl.to(wrapper, {
-scale: 1,
-x: "50vw",
-y: 0,
-duration: 0.3,
-});
-
-// 🔔 déclenche l’anim SplitText + première h-arrow une fois
-tl.call(playIntroAnim, null, ">"); // juste après le scale
-
-// PHASE 2 → wrapper revient au centre (x: 0)
-tl.to(wrapper, {
-x: "0vw",
-duration: 0.2,
-});
-
-// PHASE 3 → scroll horizontal du track
-tl.to(track, {
-x: () => -getTotalDistance(),
-ease: "none",
-duration: 0.5
-});
-
-// PHASE 4 → léger "pin" en fin de séquence (rien ne bouge, mais le pin reste)
-tl.to({}, {
-duration: 0.15
-});
-});*/
-        </script>
-      </div>
-      <div class="horizontal-text w-embed w-script">
-        <script>
-          window.addEventListener("load", () => {
-            const slides = gsap.utils.toArray(".h-slide");
-            if (!slides.length) return;
-
-            // Map slide -> { lines, svgPaths, arrows, isFirst, played }
-            const slideDataMap = new Map();
-
-            // 1) Préparation slide par slide
-            slides.forEach((slide, index) => {
-              const targets = slide.querySelectorAll(".split-horizontal");
-              const svgPaths = slide.querySelectorAll(".svg-draw path");
-              const arrows = slide.querySelectorAll(".h-arrow");
-              const isFirst = index === 0;
-
-              if (!targets.length && !svgPaths.length && !arrows.length) return;
-
-              // --- SPLIT TEXT ---
-              let lines = [];
-              if (targets.length) {
-                const splits = [];
-
-                targets.forEach((el) => {
-                  const split = new SplitText(el, {
-                    type: "lines",
-                    mask: "lines"
-                  });
-                  splits.push(split);
-                });
-
-                lines = splits.flatMap(s => s.lines);
-
-                gsap.set(lines, {
-                  y: "140%",
-                  opacity: 0
-                });
-              }
-
-              // --- SVG DRAW ---
-              if (svgPaths.length) {
-                svgPaths.forEach(path => {
-                  const length = path.getTotalLength();
-
-                  gsap.set(path, {
-                    stroke: "#ffffff",      // adapte si besoin
-                    strokeWidth: 1,
-                    fill: "none",
-                    strokeDasharray: length,
-                    strokeDashoffset: length
-                  });
-                });
-              }
-
-              // --- H-ARROW (dans leur .div-hide) ---
-              if (arrows.length) {
-                gsap.set(arrows, {
-                  yPercent: 150 // cachées vers le bas dans leur div-hide
-                  // opacity: 0 si tu veux aussi un fade
-                });
-              }
-
-              slideDataMap.set(slide, {
-                lines,
-                svgPaths,
-                arrows,
-                isFirst,
-                played: false
-              });
-            });
-
-            if (!slideDataMap.size) return;
-
-            // 2) IntersectionObserver : déclenche quand la slide est ~100% visible
-            const observer = new IntersectionObserver((entries) => {
-              entries.forEach(entry => {
-                const slide = entry.target;
-                const data = slideDataMap.get(slide);
-                if (!data) return;
-
-                if (!entry.isIntersecting || entry.intersectionRatio < 0.5) return;
-
-                // 🔒 Cas spécial : première slide → on attend le signal du timeline horizontal
-                if (data.isFirst && !document.body.classList.contains("h-slide-1-ready")) {
-                  return;
-                }
-
-                if (data.played) return;
-                data.played = true;
-
-                // ---- Anim texte ----
-                if (data.lines && data.lines.length) {
-                  gsap.to(data.lines, {
-                    y: "0%",
-                    opacity: 1,
-                    duration: 0.7,
-                    ease: "power3.out",
-                    stagger: 0.05
-                  });
-                }
-
-                // ---- Anim SVG (dessin du trait) ----
-                if (data.svgPaths && data.svgPaths.length) {
-                  gsap.to(data.svgPaths, {
-                    strokeDashoffset: 0,
-                    duration: 1.5,
-                    ease: "power3.inOut",
-                  });
-                }
-
-                // ---- Anim H-ARROW ----
-                if (data.arrows && data.arrows.length) {
-                  gsap.to(data.arrows, {
-                    yPercent: 0,
-                    duration: 0.5,
-                    ease: "power3.out"
-                    // opacity: 1 si tu actives le fade
-                  });
-                }
-
-                observer.unobserve(slide);
-              });
-            }, {
-              threshold: [0.5]
-            });
-
-            slideDataMap.forEach((_, slide) => observer.observe(slide));
-          });
-        </script>
       </div>
     </div>
     <div class="last-section bg-white">
       <div class="w-layout-grid grid-container">
         <div id="w-node-f795206b-cfea-47c2-42e7-3d1c4abaf7b3-8b326cb4" class="section__intro-text">
           <div class="nav-tag color-black split-tag">Our Identity</div>
-          <p class="manifesto clipping-text">We fly where traditional cameras cannot.<br />Built for the impossible shot, and absolute availability.</p>
+          <p class="manifesto-static clipping-text">We fly where traditional cameras cannot.<br />Built for the impossible shot, and absolute availability.</p>
         </div>
       </div>
       <div class="section-values">
@@ -1976,56 +1634,7 @@ duration: 0.15
               </div>
               <p class="use-case-text">Real Estate — Offices &amp; Workspaces | 2:05</p>
               <div class="w-embed w-script">
-                <script>
-                  window.addEventListener("DOMContentLoaded", () => {
-                    const wrappers = document.querySelectorAll(".use-case__wrapper");
-                    if (!wrappers.length) return;
-
-                    function initScrollAnim(wrapper) {
-                      const masks = wrapper.querySelectorAll(".use-case__img-mask");
-                      if (!masks.length) return;
-
-                      // État de départ pour tous les masks
-                      gsap.set(masks, { clipPath: "inset(30%)" });
-
-                      // Timeline liée au scroll, avec petit scrub + stagger
-                      gsap.timeline({
-                        scrollTrigger: {
-                          trigger: masks,
-                          start: "top bottom",   // la section commence à entrer dans le viewport
-                          end: "30% bottom",     // la section sort complètement
-                          scrub: 1,              // petit scrub fluide
-                          //markers: true,
-                        }
-                      })
-                        .to(masks, {
-                          clipPath: "inset(0%)",
-                          ease: "none",
-                          stagger: 0.1         // léger décalage entre les .use-case__item
-                        });
-                    }
-
-                    // Observer : dès que le wrapper commence à être visible, on crée la timeline
-                    const observer = new IntersectionObserver(
-                      (entries) => {
-                        entries.forEach((entry) => {
-                          if (!entry.isIntersecting) return;
-
-                          const wrapper = entry.target;
-                          initScrollAnim(wrapper);
-
-                          // on ne ré-initialise pas plusieurs fois
-                          observer.unobserve(wrapper);
-                        });
-                      },
-                      {
-                        threshold: 0.01 // dès que la section commence à être visible
-                      }
-                    );
-
-                    wrappers.forEach((wrapper) => observer.observe(wrapper));
-                  });
-                </script>
+                
               </div>
             </a></div>
           <div role="listitem" class="use-case__item w-dyn-item"><a href="portfolio.html"
@@ -2046,56 +1655,7 @@ duration: 0.15
               </div>
               <p class="use-case-text">Cinematic Production — Tourism | 3:10</p>
               <div class="w-embed w-script">
-                <script>
-                  window.addEventListener("DOMContentLoaded", () => {
-                    const wrappers = document.querySelectorAll(".use-case__wrapper");
-                    if (!wrappers.length) return;
-
-                    function initScrollAnim(wrapper) {
-                      const masks = wrapper.querySelectorAll(".use-case__img-mask");
-                      if (!masks.length) return;
-
-                      // État de départ pour tous les masks
-                      gsap.set(masks, { clipPath: "inset(30%)" });
-
-                      // Timeline liée au scroll, avec petit scrub + stagger
-                      gsap.timeline({
-                        scrollTrigger: {
-                          trigger: masks,
-                          start: "top bottom",   // la section commence à entrer dans le viewport
-                          end: "30% bottom",     // la section sort complètement
-                          scrub: 1,              // petit scrub fluide
-                          //markers: true,
-                        }
-                      })
-                        .to(masks, {
-                          clipPath: "inset(0%)",
-                          ease: "none",
-                          stagger: 0.1         // léger décalage entre les .use-case__item
-                        });
-                    }
-
-                    // Observer : dès que le wrapper commence à être visible, on crée la timeline
-                    const observer = new IntersectionObserver(
-                      (entries) => {
-                        entries.forEach((entry) => {
-                          if (!entry.isIntersecting) return;
-
-                          const wrapper = entry.target;
-                          initScrollAnim(wrapper);
-
-                          // on ne ré-initialise pas plusieurs fois
-                          observer.unobserve(wrapper);
-                        });
-                      },
-                      {
-                        threshold: 0.01 // dès que la section commence à être visible
-                      }
-                    );
-
-                    wrappers.forEach((wrapper) => observer.observe(wrapper));
-                  });
-                </script>
+                
               </div>
             </a></div>
         </div>
@@ -2207,145 +1767,10 @@ duration: 0.15
   <script type="text/javascript">gsap.registerPlugin(SplitText, ScrollTrigger, InertiaPlugin, Draggable);</script>
   <script src="https://unpkg.com/lenis@1.3.15/dist/lenis.min.js"></script>
 
-  <script
-    type="text/javascript">!function () { if (!window.UnicornStudio) { window.UnicornStudio = { isInitialized: !1 }; var i = document.createElement("script"); i.src = "https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.5.3/dist/unicornStudio.umd.js", i.onload = function () { window.UnicornStudio.isInitialized || (UnicornStudio.init(), window.UnicornStudio.isInitialized = !0) }, (document.head || document.body).appendChild(i) } }();</script>
+  
 
-  <script>
-    // Initialize a new Lenis instance for smooth scrolling
-    const lenis = new Lenis();
-
-    // Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-    // This ensures Lenis's smooth scroll animation updates on each GSAP tick
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-    });
-
-    // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-    gsap.ticker.lagSmoothing(0);
-
-
-
-  </script>
-  <script>
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const root = document.querySelector(".button-big");   // ton bouton-cursor
-      const hero = document.querySelector(".home-hero");    // section où il remplace le curseur
-      const nav = document.querySelector(".navigation");
-
-      // Desktop only + sécurité éléments
-      if (!root || !hero) return;
-      if (/Mobi|Android/i.test(navigator.userAgent)) return;
-
-      const ACTIVATION_DELAY = 1000; // 2s
-      let delayOver = false;
-      setTimeout(() => { delayOver = true; }, ACTIVATION_DELAY);
-
-      // Suivi smooth
-      const setX = gsap.quickTo(root, "x", { duration: 0.3, ease: "power3.out" });
-      const setY = gsap.quickTo(root, "y", { duration: 0.3, ease: "power3.out" });
-
-      let isOverNav = false;
-
-      // Au départ : invisible
-      gsap.set(root, {
-        scale: 0,
-        pointerEvents: "none" // important: ne bloque pas les clics en dessous
-      });
-
-      // Ratio de visibilité de la home-hero
-      function getHeroVisibleRatio() {
-        const rect = hero.getBoundingClientRect();
-        const vh = window.innerHeight || document.documentElement.clientHeight;
-        const visible = Math.min(rect.bottom, vh) - Math.max(rect.top, 0);
-        const clamped = Math.max(0, Math.min(visible, rect.height));
-        return rect.height > 0 ? clamped / rect.height : 0;
-      }
-
-      // Conditions pour activer le faux curseur
-      function shouldBeActive() {
-        if (!delayOver) return false;        // pas avant 2s
-        if (isOverNav) return false;        // pas sur la nav
-        const ratio = getHeroVisibleRatio();
-        return ratio >= 0.5;                // au moins 50% du hero visible
-      }
-
-      function activateCursor() {
-        if (!shouldBeActive()) return;
-        hero.classList.add("cursor-replaced"); // cache le vrai curseur (CSS)
-        gsap.to(root, {
-          scale: 1,
-          duration: 0.5,
-          ease: "quart.out"
-        });
-      }
-
-      function deactivateCursor() {
-        hero.classList.remove("cursor-replaced");
-        gsap.to(root, {
-          scale: 0,
-          duration: 0.4,
-          ease: "quart.out"
-        });
-      }
-
-      // Gestion nav : dès qu'on passe dessus → on cache le faux curseur
-      if (nav) {
-        nav.addEventListener("mouseenter", () => {
-          isOverNav = true;
-          deactivateCursor();
-        });
-
-        nav.addEventListener("mouseleave", () => {
-          isOverNav = false;
-          // la réactivation se fera au prochain déplacement si shouldBeActive() est true
-        });
-      }
-
-      // Mouvement pointer via ScrollTrigger.observe
-      const observer = ScrollTrigger.observe({
-        type: "pointer",
-        onMove: (self) => {
-          const { x, y } = self; // ✅ ici c'est bien x/y, pas clientX/clientY
-
-          if (!shouldBeActive()) {
-            deactivateCursor();
-            return;
-          }
-
-          setX(x);
-          setY(y);
-          activateCursor();
-        }
-      });
-
-      // Scroll : si le hero n'est plus assez visible → on cache
-      window.addEventListener("scroll", () => {
-        if (!shouldBeActive()) {
-          deactivateCursor();
-        }
-      });
-
-      // Click dans la home-hero → on suit le href du bouton
-      const targetHref = root.getAttribute("href") || root.dataset.href;
-      if (targetHref) {
-        hero.addEventListener("click", (e) => {
-          if (!shouldBeActive()) return;
-
-          // Si clique sur un vrai <a> ou <button>, on laisse le comportement normal
-          const interactive = e.target.closest("a, button");
-          if (interactive) return;
-
-          window.location.href = targetHref;
-        });
-      }
-    });
-  </script>
+  <script src="js/runtime.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", () => SiteMotion.initHeroCursor());</script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const heroSvgText = document.querySelector('.home-hero .test svg text');
@@ -2366,7 +1791,7 @@ duration: 0.15
 
         // This is the actual 26px header text. Once docked, leave it entirely unscaled.
         if (progress >= 1) {
-          navLogo.style.transform = 'none';
+          if (navLogo.style.transform !== 'none') navLogo.style.transform = 'none';
           return;
         }
 
@@ -2412,7 +1837,7 @@ duration: 0.15
       }
 
       window.addEventListener('scroll', scheduleRender, { passive: true });
-      window.addEventListener('resize', measureLogo);
+      window.addEventListener('resize', SiteMotion.frameTask(measureLogo), { passive: true });
       window.addEventListener('load', measureLogo);
       window.addEventListener('pageshow', measureLogo);
       document.fonts.ready.then(measureLogo);
