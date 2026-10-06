@@ -1,0 +1,366 @@
+/* Hero Section */
+.section-home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 15vh;
+  position: relative;
+}
+
+.hero-cursor-area {
+  cursor: none; /* Hide default cursor when hovering this area */
+}
+
+/* Custom Cursor */
+.custom-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 120px;
+  height: 120px;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.cursor-content {
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+/* If mobile, hide custom cursor and show standard big button */
+@media (max-width: 992px) {
+  .custom-cursor {
+    display: none !important;
+  }
+  .hero-cursor-area {
+    cursor: auto;
+  }
+}
+@media (min-width: 993px) {
+  .desktop-hidden {
+    display: none !important;
+  }
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.hero-title {
+  font-size: clamp(3rem, 6vw, 6.5rem);
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* Manifesto Section */
+.section-manifesto {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--primary-bg);
+}
+
+.manifesto-grid {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.manifesto-text {
+  font-size: clamp(2rem, 4vw, 4rem);
+  line-height: 1.2;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+
+/* Horizontal Scroll Section */
+.horizontal-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  overflow: hidden;
+}
+
+.horizontal-wrapper {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+}
+
+.h-slide {
+  width: 50vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4vw;
+  flex-shrink: 0;
+}
+
+.h-slide.side {
+  width: 20vw;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.slide-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 70vh;
+}
+
+.top-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.slide-desc {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.4;
+}
+
+.bot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.bot-content.gap {
+  gap: 1.5rem;
+}
+
+.slide-title {
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 0.9;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+  transition: all 0.4s ease;
+}
+
+.h-slide:hover .slide-title {
+  color: white;
+}
+
+.slide-side-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 70vh;
+  padding: 2rem 0;
+}
+
+.svg-draw {
+  width: 100px;
+  height: 100px;
+}
+
+.svg-draw path {
+  /* Initial state for SVG drawing animation */
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+}
+
+/* Marquee Section */
+.marquee-section {
+  padding: 4rem 0;
+  background-color: var(--primary-bg);
+  overflow: hidden;
+  display: flex;
+  white-space: nowrap;
+}
+
+.scroll-marquee {
+  display: flex;
+  animation: scroll-marquee 15s linear infinite;
+}
+
+@keyframes scroll-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* Halfway point if duplicated perfectly */
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  padding-right: 2rem;
+}
+
+.marquee-content span {
+  font-size: clamp(3rem, 6vw, 6rem);
+  text-transform: uppercase;
+  font-weight: 300;
+  color: transparent;
+  -webkit-text-stroke: 1px #B2CBE6;
+  margin-right: 2rem;
+}
+
+.marquee-icon {
+  width: 60px;
+  height: 60px;
+  fill: #B2CBE6;
+}
+
+/* Use Cases / Portfolio */
+.use-cases {
+  padding: var(--spacing-xl) 0;
+  background-color: var(--primary-bg);
+}
+
+.use-case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+
+.use-case-item {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.use-case-img-wrapper {
+  width: 100%;
+  height: 60vh;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  /* Clip-path for scroll reveal */
+  clip-path: inset(20% 10% 20% 10%); 
+}
+
+.use-case-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.use-case-item:hover .use-case-img {
+  transform: scale(1.05);
+}
+
+.use-case-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.use-case-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.use-case-top h3 {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+.icon-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 50%;
+  font-size: 0.8rem;
+}
+
+.use-case-meta {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
+  padding-top: var(--spacing-xl);
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.btn-s.accent {
+  background: var(--white);
+  color: var(--accent-color);
+  border-color: var(--white);
+  padding: 1rem 2rem;
+}
+
+.footer-bot {
+  padding: 2rem 0;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .manifesto-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .h-slide {
+    width: 85vw;
+  }
+  
+  .h-slide.side {
+    width: 30vw;
+  }
+
+  .footer-grid, .flex-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+}

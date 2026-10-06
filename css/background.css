@@ -1,0 +1,17 @@
+/* Keep the existing Unicorn animation, mapping its blue tones to plum.
+   Midtones map to #2E1C2B; shadows and highlights retain the gradient. */
+.background[data-us-project] {
+  background: radial-gradient(ellipse at 50% 35%, #805c79 0%, #2e1c2b 50%, #0f090e 100%);
+  pointer-events: none;
+  contain: strict;
+}
+
+.background[data-us-project] canvas {
+  filter: url("#plum-background");
+}
+
+@media (max-width: 600px) {
+  [data-portfolio-clone] {
+    display: none;
+  }
+}

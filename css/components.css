@@ -1,0 +1,106 @@
+/* Navigation */
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 4vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  mix-blend-mode: difference;
+  color: white; /* With difference, it will look inverted on white/black */
+}
+
+.nav-logo svg {
+  height: 24px;
+  fill: currentColor;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-tag {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+}
+
+.nav-tag:hover {
+  opacity: 0.6;
+}
+
+/* Buttons */
+.btn-s {
+  padding: 0.8rem 1.5rem;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-s:hover {
+  background: white;
+  color: black;
+}
+
+.btn-big {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  padding: 1rem 0;
+}
+
+.circle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 50%;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.btn-big:hover .circle-icon {
+  transform: translate(5px, -5px);
+  background: var(--accent-color);
+  color: white;
+}
+
+/* Tags */
+.tag {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid currentColor;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.arrow-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 50%;
+  color: var(--accent-color);
+  font-size: 1.5rem;
+}

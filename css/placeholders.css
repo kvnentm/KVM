@@ -1,0 +1,18 @@
+/* Empty media blocks keep the original wrappers, sizing, links, and animations. */
+.image-placeholder {
+  display: block;
+  background-color: #cbd5df;
+}
+
+.image-placeholder.image-2,
+.image-placeholder.about-img,
+.image-placeholder.value-img {
+  height: 100%;
+}
+
+/* Replace the hosted stylesheet's decorative texture with a flat color. */
+.clipping-text,
+.clipping-text *,
+.nav-mobile__link {
+  background-image: linear-gradient(#b2cbe6, #b2cbe6) !important;
+}
