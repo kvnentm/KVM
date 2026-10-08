@@ -45,7 +45,7 @@
       UnicornStudio.addScene({
         elementId: background.id,
         projectId: background.dataset.usProject,
-        fps: 120,
+        fps: mobile ? 60 : 120,
         dpi: 1,
         scale: mobile ? 0.5 : 0.75,
         fixed: true,

@@ -1,0 +1,282 @@
+/* Responsive overrides for the hosted Webflow stylesheet.
+   Webflow sizes UI text in vw, which becomes unreadable on laptops and tablets;
+   these rules keep the same scaling but add readable floors. Loaded last. */
+
+img,
+video {
+  max-width: 100%;
+}
+
+.contact-val,
+a[href^="mailto:"] {
+  overflow-wrap: anywhere;
+}
+
+/* --- Readable minimums (all widths) --------------------------------------- */
+body {
+  font-size: max(14px, 1.111vw);
+}
+
+h4 {
+  font-size: max(17px, 1.528vw);
+}
+
+.btn-b {
+  font-size: max(13px, .833vw);
+}
+
+.nav-tag {
+  font-size: max(12px, .694vw);
+}
+
+.btn-s {
+  font-size: max(12px, .694vw);
+}
+
+.claim-s {
+  font-size: max(15px, 1.389vw);
+}
+
+/* Inline section labels sit inside this indent; keep room for the larger label */
+.text-span-2 {
+  padding-left: max(6vw, 84px);
+}
+
+.f-input,
+.f-textarea {
+  font-size: max(16px, 1rem); /* 16px+ also prevents iOS focus zoom */
+}
+
+/* --- Tablet & small laptop: burger navigation (480–991px) ----------------
+   The inline nav CSS hides `.nav--list`, which does not exist, so the desktop
+   links and the burger showed together. The mobile panel was also styled only
+   at ≤479px; mirror those rules here with fixed sizes. */
+@media screen and (max-width: 991px) {
+  .navigation .nav--item {
+    display: none;
+  }
+
+  .nav-tag {
+    font-size: 13px;
+  }
+
+  .btn-s {
+    font-size: 13px;
+  }
+
+  .claim-s {
+    font-size: 16px;
+  }
+
+  .nav-burger svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .nav-burger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+@media screen and (min-width: 480px) and (max-width: 991px) {
+  body {
+    font-size: 16px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  /* Stack inline section labels above their text, as on phones */
+  .text-span-2 {
+    padding-left: 0;
+  }
+
+  .subtitle-in-text {
+    margin-bottom: 16px;
+  }
+
+  .nav-mobile-panel {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 32px;
+    padding: 120px 40px 48px;
+  }
+
+  .div-block-9 {
+    display: flex;
+    flex-flow: column;
+    gap: 40px;
+    max-height: 50%;
+  }
+
+  .nav-mobile__list-link {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .nav-mobile__list-item {
+    font-family: AlmarenaNeueDisplay, Arial, sans-serif;
+    font-size: clamp(40px, 6vw, 56px);
+    font-weight: 400;
+  }
+
+  .nav-mobile__link,
+  .nav-submobile__link,
+  .nav-submobile__list-item {
+    color: var(--black);
+    text-decoration: none;
+  }
+
+  .nav-mobile__submenu.nav-mobile__submenu-offres,
+  .nav-mobile__submenu.nav-mobile__submenu-expertise {
+    background-color: var(--white);
+  }
+
+  .submenu__block {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    padding: 120px 40px 48px;
+    position: relative;
+  }
+
+  .nav-mobile__submenu-back {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    color: var(--oragne);
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
+
+  .submenu-back {
+    text-transform: uppercase;
+    font-family: Aratigo, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .svg-back {
+    width: 16px;
+    height: 16px;
+  }
+
+  .nav-submobile__list-link {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+    gap: 20px;
+    height: 50svh;
+    overflow: auto;
+  }
+
+  .nav-submobile__link {
+    font-family: Aratigo, Arial, sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  .footer-mobile {
+    display: flex;
+    gap: 24px;
+  }
+
+  .h-line-mobile.on-mobile {
+    display: block;
+    mix-blend-mode: normal;
+  }
+
+  .logo-mobile {
+    width: 70vw;
+  }
+}
+
+/* --- Phones (≤479px) ------------------------------------------------------ */
+@media screen and (max-width: 479px) {
+  .text-span-2 {
+    padding-left: 0;
+  }
+
+  body {
+    font-size: max(15px, 3.98vw);
+  }
+
+  h4 {
+    font-size: max(17px, 4.478vw);
+  }
+
+  /* Footer credits row: let links wrap instead of running off-screen */
+  .right.right-align {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 4px 20px;
+  }
+
+  .nav-tag {
+    font-size: max(12px, 1.99vw);
+  }
+
+  .btn-s {
+    font-size: max(13px, 2.985vw);
+  }
+
+  .claim-s {
+    font-size: max(15px, 3.98vw);
+  }
+
+  .nav-submobile__link {
+    font-size: max(17px, 4.478vw);
+  }
+
+  .submenu-back {
+    font-size: 13px;
+  }
+
+  .svg-back {
+    width: 14px;
+    height: 14px;
+  }
+
+  .nav-mobile__submenu-back {
+    height: auto;
+    min-height: 44px;
+  }
+}
+
+/* --- Touch targets -------------------------------------------------------- */
+@media (pointer: coarse) {
+  /* Grow the hit area without moving the visual layout */
+  .link-block,
+  .contact-val[href],
+  .nav--logo {
+    padding-block: 14px;
+    margin-block: -14px;
+  }
+
+  .nav-submobile__link {
+    display: inline-block;
+    padding-block: 10px;
+  }
+
+  .nav-submobile__list-link {
+    gap: 4px;
+  }
+}
+
+/* The menu's text-clip effect paints the hover duplicates through their
+   overflow mask; hover swaps are not used in the touch menu, so hide them. */
+.nav-mobile-panel .nav-tag.hide,
+.nav-mobile__submenu .nav-tag.hide {
+  visibility: hidden;
+}

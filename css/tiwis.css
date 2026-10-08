@@ -3070,7 +3070,7 @@ strong {
 
 .left.clipping-text {
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(#b2cbe6, #b2cbe6);
+  background-image: linear-gradient(#5A0F1A, #5A0F1A);
   background-position: 0 0;
   background-size: auto;
   -webkit-background-clip: text;
@@ -3147,7 +3147,7 @@ strong {
 
 .clipping-text {
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(#b2cbe6, #b2cbe6);
+  background-image: linear-gradient(#5A0F1A, #5A0F1A);
   background-position: 0 0;
   background-size: auto;
   -webkit-background-clip: text;
@@ -5883,7 +5883,7 @@ strong {
 
   .h-line-mobile.on-mobile.clipping-item {
     -webkit-text-fill-color: inherit;
-    background-image: linear-gradient(#b2cbe6, #b2cbe6);
+    background-image: linear-gradient(#5A0F1A, #5A0F1A);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;

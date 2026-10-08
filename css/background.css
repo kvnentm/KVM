@@ -1,7 +1,7 @@
-/* Keep the existing Unicorn animation, mapping its blue tones to plum.
-   Midtones map to #2E1C2B; shadows and highlights retain the gradient. */
+/* Keep the existing Unicorn animation, mapping its tones to wine/crimson (#5A0F1A).
+   Midtones map to #5A0F1A; shadows and highlights retain the gradient. */
 .background[data-us-project] {
-  background: radial-gradient(ellipse at 50% 35%, #805c79 0%, #2e1c2b 50%, #0f090e 100%);
+  background: radial-gradient(ellipse at 50% 35%, #a44250 0%, #5a0f1a 50%, #160406 100%);
   pointer-events: none;
   contain: strict;
 }
@@ -14,4 +14,21 @@
   [data-portfolio-clone] {
     display: none;
   }
+}
+
+.clipping-text,
+.clipping-text * {
+  background-image: linear-gradient(#5A0F1A, #5A0F1A) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.color-blue,
+.btn-b.color-blue,
+.btn-s.color-blue,
+.nav-tag.color-blue,
+.svc-num {
+  color: #5A0F1A !important;
 }

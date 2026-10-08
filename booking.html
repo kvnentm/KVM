@@ -68,8 +68,9 @@
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.15/dist/lenis.css">
 
   <style>
+    .clipping-text,
     .clipping-text * {
-      background-image: linear-gradient(#b2cbe6, #b2cbe6);
+      background-image: linear-gradient(#5A0F1A, #5A0F1A);
       background-size: cover;
       background-position: center;
       -webkit-background-clip: text;
@@ -97,7 +98,7 @@
     
     .svc-item { padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; gap: 1rem; }
     .svc-item:last-child { border-bottom: none; }
-    .svc-num { color: #B2CBE6; }
+    .svc-num { color: #5A0F1A; }
     .svc-name { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; font-family: 'Inter', sans-serif; }
     
     .contact-row { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
@@ -112,7 +113,7 @@
     
     .f-field { display: flex; flex-direction: column; gap: 0.5rem; }
     .f-input, .f-textarea { background: transparent; border: 1px solid rgba(255,255,255,0.2); padding: 1rem; color: #fff; font-family: inherit; font-size: 1rem; border-radius: 2px; }
-    .f-input:focus, .f-textarea:focus { border-color: #B2CBE6; outline: none; background: rgba(178,203,230,0.05); }
+    .f-input:focus, .f-textarea:focus { border-color: #5A0F1A; outline: none; background: rgba(90,15,26,0.05); }
     .f-input::placeholder, .f-textarea::placeholder { color: rgba(255,255,255,0.3); }
     .f-textarea { min-height: 150px; resize: vertical; }
     .f-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 1rem 0; }
@@ -122,7 +123,7 @@
     .svc-tile { position: relative; }
     .svc-tile input { position: absolute; opacity: 0; }
     .svc-tile-label { display: block; padding: 1rem; border: 1px solid rgba(255,255,255,0.2); text-align: center; cursor: pointer; transition: 0.2s; border-radius: 2px; font-size: 0.8rem; font-weight: 500; }
-    .svc-tile input:checked + .svc-tile-label { border-color: #B2CBE6; background: rgba(178,203,230,0.1); }
+    .svc-tile input:checked + .svc-tile-label { border-color: #5A0F1A; background: rgba(90,15,26,0.1); }
     
     .submit-row { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
     .submit-note { opacity: 0.5; max-width: 300px; font-size: 0.8rem; line-height: 1.5; }
@@ -156,6 +157,7 @@
 <link rel="icon" href="assets/kvm-icon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="css/placeholders.css" />
   <link rel="stylesheet" href="css/background.css" />
+  <link rel="stylesheet" href="css/responsive.css">
   <script src="js/motion.js" defer></script>
   <link rel="preconnect" href="https://unpkg.com" crossorigin />
   <link rel="preconnect" href="https://d3e54v103j8qbb.cloudfront.net" crossorigin />
@@ -168,9 +170,9 @@
       <filter id="plum-background" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
         <feColorMatrix type="saturate" values="0" />
         <feComponentTransfer>
-          <feFuncR type="table" tableValues="0.058824 0.180392 0.501961" />
-          <feFuncG type="table" tableValues="0.035294 0.109804 0.360784" />
-          <feFuncB type="table" tableValues="0.054902 0.168627 0.474510" />
+          <feFuncR type="table" tableValues="0.086275 0.352941 0.643137" />
+          <feFuncG type="table" tableValues="0.015686 0.058824 0.258824" />
+          <feFuncB type="table" tableValues="0.023529 0.101961 0.313725" />
         </feComponentTransfer>
       </filter>
     </defs>
@@ -840,22 +842,14 @@
                 let isOpen = false;
 
 
-                const triggerOffres = panel.querySelector(".nav-mobile__link-offres");
-                const triggerExpertise = panel.querySelector(".nav-mobile__link-expertise");
 
-                if (triggerOffres && subMenuOffres) {
-                  triggerOffres.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    openSubMenu(subMenuOffres);
+                // Menu links navigate directly; close the panel first so same-page
+                // links (e.g. #services on the home page) don't leave it open.
+                panel.querySelectorAll(".nav-mobile__link").forEach(link => {
+                  link.addEventListener("click", () => {
+                    if (panel.classList.contains("is-open")) burger.click();
                   });
-                }
-
-                if (triggerExpertise && subMenuExpertise) {
-                  triggerExpertise.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    openSubMenu(subMenuExpertise);
-                  });
-                }
+                });
 
                 const submenuBackButtons = document.querySelectorAll(".nav-mobile__submenu-back");
                 submenuBackButtons.forEach(btn => {
@@ -1010,7 +1004,7 @@
 
           /* 3) Menu mobile ouvert → BURGER ORANGE */
           .navigation.menu-open .nav-burger {
-            color: #B2CBE6;
+            color: #5A0F1A;
           }
 
           .navigation.menu-open .nav-burger svg polyline {
@@ -1027,7 +1021,7 @@
     <div class="nav-mobile-panel">
       <div class="div-block-9">
         <ul role="list" class="nav-mobile__list-link">
-          <li class="nav-mobile__list-item"><a data-submenu-target="offres" href="#"
+          <li class="nav-mobile__list-item"><a data-submenu-target="offres" href="index.html#services"
               class="nav-mobile__link nav-mobile__link-offres">Services</a></li>
           <li class="nav-mobile__list-item"><a href="portfolio.html" class="nav-mobile__link">Portfolio</a></li>
           <li class="nav-mobile__list-item"><a data-submenu-target="expertise" href="about.html" aria-current="page"
@@ -1052,10 +1046,16 @@
         <div class="h-line-mobile on-mobile clipping-item"></div>
         <div class="right right-align">
           <div class="footer-mobile"><a data-w-id="77b08b28-eab5-8f18-46ff-4198c787495d"
-              href="https://www.instagram.com/kvm.drone" class="link-block w-inline-block">
+              href="https://www.linkedin.com/company/kvmirl/home/" class="link-block w-inline-block" target="_blank" rel="noopener">
               <div class="div-hide">
                 <div class="nav-tag color-white">Linkedin</div>
                 <div class="nav-tag hide color-white">Linkedin</div>
+              </div>
+            </a><a data-w-id="77b08b28-eab5-8f18-46ff-4198c787495d"
+              href="https://www.instagram.com/kvm.ie/" class="link-block w-inline-block" target="_blank" rel="noopener">
+              <div class="div-hide">
+                <div class="nav-tag color-white">Instagram</div>
+                <div class="nav-tag hide color-white">Instagram</div>
               </div>
             </a><a data-w-id="77b08b28-eab5-8f18-46ff-4198c7874956" href="mailto:Hello@KVM.fr"
               class="link-block w-inline-block">
@@ -1063,13 +1063,7 @@
                 <div class="nav-tag color-white">Hello@KVM.fr</div>
                 <div class="nav-tag hide color-white">Hello@KVM.fr<br /></div>
               </div>
-            </a></div><a data-w-id="77b08b28-eab5-8f18-46ff-4198c7874963" href="https://www.instagram.com/kvm.drone"
-            class="link-block w-inline-block">
-            <div class="div-hide">
-              <div class="nav-tag color-white">Website by Flot Noir Studio</div>
-              <div class="nav-tag hide color-white">Website by Flot Noir Studio</div>
-            </div>
-          </a>
+            </a></div>
         </div>
       </div>
     </div>
@@ -1135,10 +1129,16 @@
           <div class="h-line-mobile on-mobile clipping-item"></div>
           <div class="right right-align">
             <div class="footer-mobile"><a data-w-id="137071fe-db2c-2232-c30c-6b9871b7dac7"
-                href="https://www.instagram.com/kvm.drone" class="link-block w-inline-block">
+                href="https://www.linkedin.com/company/kvmirl/home/" class="link-block w-inline-block" target="_blank" rel="noopener">
                 <div class="div-hide">
                   <div class="nav-tag color-white">Linkedin</div>
                   <div class="nav-tag hide color-white">Linkedin</div>
+                </div>
+              </a><a data-w-id="137071fe-db2c-2232-c30c-6b9871b7dac7"
+                href="https://www.instagram.com/kvm.ie/" class="link-block w-inline-block" target="_blank" rel="noopener">
+                <div class="div-hide">
+                  <div class="nav-tag color-white">Instagram</div>
+                  <div class="nav-tag hide color-white">Instagram</div>
                 </div>
               </a><a data-w-id="137071fe-db2c-2232-c30c-6b9871b7dacd" href="mailto:Hello@KVM.fr"
                 class="link-block w-inline-block">
@@ -1146,13 +1146,7 @@
                   <div class="nav-tag color-white">Hello@KVM.fr</div>
                   <div class="nav-tag hide color-white">Hello@KVM.fr<br /></div>
                 </div>
-              </a></div><a data-w-id="15fb51ef-bf0b-21b6-45a0-eed75180c552" href="https://www.instagram.com/kvm.drone"
-              class="link-block w-inline-block">
-              <div class="div-hide">
-                <div class="nav-tag color-white">Website by Flot Noir Studio</div>
-                <div class="nav-tag hide color-white">Website by Flot Noir Studio</div>
-              </div>
-            </a>
+              </a></div>
           </div>
         </div>
       </div>
@@ -1194,10 +1188,16 @@
           <div class="h-line-mobile on-mobile clipping-item"></div>
           <div class="right right-align">
             <div class="footer-mobile"><a data-w-id="2cae2378-55e7-6dea-3b5b-c810eb5a631a"
-                href="https://www.instagram.com/kvm.drone" class="link-block w-inline-block">
+                href="https://www.linkedin.com/company/kvmirl/home/" class="link-block w-inline-block" target="_blank" rel="noopener">
                 <div class="div-hide">
                   <div class="nav-tag color-white">Linkedin</div>
                   <div class="nav-tag hide color-white">Linkedin</div>
+                </div>
+              </a><a data-w-id="2cae2378-55e7-6dea-3b5b-c810eb5a631a"
+                href="https://www.instagram.com/kvm.ie/" class="link-block w-inline-block" target="_blank" rel="noopener">
+                <div class="div-hide">
+                  <div class="nav-tag color-white">Instagram</div>
+                  <div class="nav-tag hide color-white">Instagram</div>
                 </div>
               </a><a data-w-id="2cae2378-55e7-6dea-3b5b-c810eb5a6320" href="mailto:Hello@KVM.fr"
                 class="link-block w-inline-block">
@@ -1205,12 +1205,7 @@
                   <div class="nav-tag color-white">Hello@KVM.fr</div>
                   <div class="nav-tag hide color-white">Hello@KVM.fr<br /></div>
                 </div>
-              </a></div><a href="https://www.instagram.com/kvm.drone" class="link-block w-inline-block">
-              <div class="div-hide">
-                <div class="nav-tag color-white">Website by Flot Noir Studio</div>
-                <div class="nav-tag hide color-white">Website by Flot Noir Studio</div>
-              </div>
-            </a>
+              </a></div>
           </div>
         </div>
       </div>
@@ -1271,7 +1266,7 @@
           </div>
 
           <div class="promise-box">
-            <div class="promise-label nav-tag" style="color: #B2CBE6; margin-bottom: 1rem;">Our Promise</div>
+            <div class="promise-label nav-tag" style="color: #5A0F1A; margin-bottom: 1rem;">Our Promise</div>
             <p class="promise-text p-small" style="color: rgba(255,255,255,0.6); line-height: 1.6;">Every brief is read in full. We don't send templates — we reply with a considered proposal tailored to your location, timeline, and creative vision.</p>
           </div>
         </aside>
@@ -1421,10 +1416,16 @@
       <div class="h-line on-mobile"></div>
       <div class="right right-align">
         <div class="footer-mobile"><a data-w-id="8fc34f98-52bc-4588-c8ae-15f2d43db3c6"
-            href="https://www.instagram.com/kvm.drone" class="link-block w-inline-block">
+            href="https://www.linkedin.com/company/kvmirl/home/" class="link-block w-inline-block" target="_blank" rel="noopener">
             <div class="div-hide">
               <div class="nav-tag color-white">Linkedin</div>
               <div class="nav-tag hide color-white">Linkedin</div>
+            </div>
+          </a><a data-w-id="8fc34f98-52bc-4588-c8ae-15f2d43db3c6"
+            href="https://www.instagram.com/kvm.ie/" class="link-block w-inline-block" target="_blank" rel="noopener">
+            <div class="div-hide">
+              <div class="nav-tag color-white">Instagram</div>
+              <div class="nav-tag hide color-white">Instagram</div>
             </div>
           </a><a data-w-id="8fc34f98-52bc-4588-c8ae-15f2d43db3cc" href="mailto:Hello@KVM.fr"
             class="link-block w-inline-block">
@@ -1438,20 +1439,17 @@
             <div class="nav-tag color-white first">Hello@KVM.fr</div>
             <div class="nav-tag hide color-white two">Hello@KVM.fr<br /></div>
           </div>
-        </a><a data-w-id="4ebae602-ae4c-cc9a-663d-ee8ee30ed02e" href="https://www.instagram.com/kvm.drone"
-          class="link-block no-mobile w-inline-block">
+        </a><a data-w-id="4ebae602-ae4c-cc9a-663d-ee8ee30ed02e" href="https://www.linkedin.com/company/kvmirl/home/"
+          class="link-block no-mobile w-inline-block" target="_blank" rel="noopener">
           <div class="div-hide">
             <div class="nav-tag color-white first">Linkedin</div>
             <div class="nav-tag hide color-white two">Linkedin</div>
           </div>
-        </a><a data-w-id="b228e91b-5def-1ae6-b4d2-bc8c19668f4a" href="#" class="link-block ml-link w-inline-block">
+        </a><a data-w-id="4ebae602-ae4c-cc9a-663d-ee8ee30ed02e" href="https://www.instagram.com/kvm.ie/"
+          class="link-block no-mobile w-inline-block" target="_blank" rel="noopener">
           <div class="div-hide">
-            <div class="nav-tag color-white first">Legal mentions</div>
-          </div>
-        </a><a data-w-id="51665e2c-e74f-b8de-6933-62c02c3f2477" href="https://www.instagram.com/kvm.drone"
-          class="link-block last-link w-inline-block">
-          <div class="div-hide">
-            <div class="nav-tag color-white first">Website by Flot Noir Studio</div>
+            <div class="nav-tag color-white first">Instagram</div>
+            <div class="nav-tag hide color-white two">Instagram</div>
           </div>
         </a>
       </div>
