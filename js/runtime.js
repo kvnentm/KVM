@@ -28,26 +28,28 @@
   let scene;
   let loading = false;
   let failed = false;
+  // Mobile Safari ignores the SVG plum filter on canvas, so touch devices keep
+  // the static plum CSS gradient instead of the (blue) animated scene.
+  const touch = matchMedia('(pointer: coarse)').matches;
 
   function syncBackground() {
     if (scene) {
       scene.paused = document.hidden || reducedMotion.matches;
       return;
     }
-    if (loading || failed || document.hidden || reducedMotion.matches) return;
+    if (touch || loading || failed || document.hidden || reducedMotion.matches) return;
     loading = true;
     background.id ||= 'ambient-background';
 
     const initialize = () => {
-      const mobile = matchMedia('(pointer: coarse)').matches;
       // The existing v1.5.3 SDK supports explicit fps, scale, dpi and pause.
       // Lower pixel count keeps the soft gradient affordable at high refresh rates.
       UnicornStudio.addScene({
         elementId: background.id,
         projectId: background.dataset.usProject,
-        fps: mobile ? 60 : 120,
+        fps: 120,
         dpi: 1,
-        scale: mobile ? 0.5 : 0.75,
+        scale: 0.75,
         fixed: true,
         interactivity: { mouse: { disableMobile: true } }
       }).then(result => {
